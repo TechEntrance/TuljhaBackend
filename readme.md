@@ -34,33 +34,40 @@ Key features include:
 Here's the structure of the project:
 
 ```
-TuljhaHotel/
-│
-├─── TuljhaHotel/
-│   ├── asgi.py
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   └── __init__.py
-│
-├─── management/
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   └── migrations/
-│       └── __init__.py
-│
-├─── templates/
-│   ├── organization_list.html
-│   ├── create_food_order.html
-│   ├── create_expense.html
-│   └── dashboard.html
-│
-└─── manage.py
-```
+PS C:\Users\pinja\OneDrive\Desktop\Tuljha> tree 
+Folder PATH listing for volume Windows
+Volume serial number is 96D1-B676
+C:.
+├───Dashboard
+│   ├───migrations
+│   │   └───__pycache__
+│   ├───static
+│   │   ├───constants
+│   │   ├───css
+│   │   ├───images
+│   │   └───js
+│   ├───templates
+│   └───__pycache__
+├───staticfiles
+│   ├───admin
+│   │   ├───css
+│   │   │   └───vendor
+│   │   │       └───select2
+│   │   ├───img
+│   │   │   └───gis
+│   │   └───js
+│   │       ├───admin
+│   │       └───vendor
+│   │           ├───jquery
+│   │           ├───select2
+│   │           │   └───i18n
+│   │           └───xregexp
+│   ├───constants
+│   ├───css
+│   ├───images
+│   └───js
+└───Tuljha
+    └───__pycache__```
 
 ---
 
