@@ -62,12 +62,13 @@
           {% csrf_token %}
           <h1>Food Order Management</h1>
           <label for="organization">Select Organization:</label>
-          <select id="organization" name="organization" required>
-            <!-- Dynamically populate organization options -->
-            {% for org in organizations %}
-              <option value="{{ org.id }}">{{ org.name }}</option>
-            {% endfor %}
-          </select>
+<select id="organization" name="organization" required>
+    <!-- Dynamically populate organization options -->
+    {% for org in organizations %}
+        <option value="{{ org.id }}">{{ org.name }}</option>
+    {% endfor %}
+</select>
+
 
           <label for="people-served">Number of People Served:</label>
           <input type="number" id="people-served" name="people_served" required />

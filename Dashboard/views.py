@@ -1,9 +1,7 @@
-# Dashboard/views.py
 from django.shortcuts import render, redirect
-from .models import Organization, Expense, Invoice  # Correct import
+from .models import Organization, Expense, Invoice, FoodOrder
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -15,7 +13,7 @@ def auth_view(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('index')  # Redirecting to the main index page
+                return redirect('index')  # Redirect to main index page
             else:
                 return render(request, 'auth.html', {'error': 'Invalid credentials', 'mode': 'login'})
 
@@ -30,7 +28,7 @@ def auth_view(request):
                     user = User.objects.create_user(username=username, email=email, password=password)
                     user.save()
                     login(request, user)
-                    return redirect('index')  # Redirecting to the main index page
+                    return redirect('index')  # Redirect to main index page
                 except Exception as e:
                     return render(request, 'auth.html', {'error': 'Username or email already exists', 'mode': 'signup'})
             else:
@@ -41,40 +39,68 @@ def auth_view(request):
 
 @login_required
 def index(request):
-    return render(request, 'index.html')  # Render your index.html
-
-# View for organizations page
+    return render(request, 'index.html')  # Render index.html
+@login_required
 def organization(request):
-    return render(request, 'organization.html')
+    if request.method == 'POST':
+        org_name = request.POST.get('org_name')
+        contact_person = request.POST.get('contact_person')
+        contact_email = request.POST.get('contact_email')
 
-# Rename this function to food_order
-# View for the food orders page
+        # Create and save the organization instance
+        organization = Organization(
+            name=org_name,
+            contact_email=contact_email,
+            # Assuming 'phone_number' and 'address' are also required; you may want to add these fields to the form.
+            phone_number=request.POST.get('phone_number', ''),  # Add this field to your form
+            address=request.POST.get('address', '')  # Add this field to your form
+        )
+        organization.save()  # Save the organization instance to the database
+        return redirect('organization')  # Redirect to the organization page or any other page
+
+    # Fetch all organizations to display in the table
+    organizations = Organization.objects.all()
+    return render(request, 'organization.html', {'organizations': organizations})
+
+@login_required
 def food_order_view(request):
     organizations = Organization.objects.all()  # Fetch all organizations
     if request.method == 'POST':
-        # Process the submitted form data here
-        pass
+        # Process the submitted food order data
+        organization_id = request.POST.get('organization')
+        food_items = request.POST.get('food_items')
+        people_served = request.POST.get('people_served')
+        total_cost = request.POST.get('total_cost')
+        organization = Organization.objects.get(id=organization_id)
+        
+        FoodOrder.objects.create(
+            organization=organization,
+            people_served=people_served,
+            food_items=food_items,
+            total_cost=total_cost,
+            user=request.user
+        )
+        return redirect('food-order')
 
     return render(request, 'food_order.html', {'organizations': organizations})
-# View for invoicing page
+
+@login_required
 def invoicing_view(request):
     invoices = Invoice.objects.all()  # Fetch all invoices
     return render(request, 'invoicing.html', {
         'invoices': invoices,
-        'user': request.user  # Pass the user object for personalization
+        'user': request.user
     })
 
-# View for expense page
-# @login_required  # This decorator will redirect unauthenticated users to the login page
-@login_required  # Ensure only authenticated users can access this view
+@login_required
 def expense_view(request):
-    expenses = Expense.objects.filter(user=request.user)
+    expenses = Expense.objects.filter(user=request.user)  # Fetch user's expenses
     return render(request, 'expense.html', {'expenses': expenses})
 
-# View for reports page
+@login_required
 def reports(request):
     return render(request, 'reports.html')
 
-# View for profile settings page
+@login_required
 def profile(request):
     return render(request, 'profile.html')

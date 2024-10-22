@@ -56,16 +56,18 @@
         </aside>
 
         <main>
-            <form id="organization-form">
+            <form id="organization-form" method="POST" action="{% url 'organization' %}">
+                {% csrf_token %}
                 <h1>Organization Management</h1>
                 <label for="org-name">Organization Name:</label>
-                <input type="text" id="org-name" required />
+                <input type="text" id="org-name" name="org_name" required />
                 <label for="contact-person">Contact Person:</label>
-                <input type="text" id="contact-person" required />
+                <input type="text" id="contact-person" name="contact_person" required />
                 <label for="email">Email:</label>
-                <input type="email" id="email" required />
+                <input type="email" id="email" name="contact_email" required />
                 <button type="submit">Add Organization</button>
             </form>
+            
             <table>
                 <thead>
                     <tr>
@@ -77,9 +79,22 @@
                     </tr>
                 </thead>
                 <tbody id="organization-table-body">
-                    <!-- Organizations will be populated here -->
+                    {% for org in organizations %}
+                    <tr>
+                        <td>{{ org.name }}</td>
+                        <td>{{ org.contact_person }}</td>  <!-- Adjust this based on your model -->
+                        <td>{{ org.contact_email }}</td>
+                        <td><!-- Total Ordered Count Here --></td>
+                        <td><!-- Action Buttons Here --></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No organizations found.</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+            
             <button id="download-btn">Download as CSV</button>
         </main>
 
