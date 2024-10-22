@@ -34,10 +34,6 @@ Key features include:
 Here's the structure of the project:
 
 ```
-PS C:\Users\pinja\OneDrive\Desktop\Tuljha> tree 
-Folder PATH listing for volume Windows
-Volume serial number is 96D1-B676
-C:.
 ├───Dashboard
 │   ├───migrations
 │   │   └───__pycache__
@@ -67,9 +63,9 @@ C:.
 │   ├───images
 │   └───js
 └───Tuljha
-    └───__pycache__```
+    └───__pycache__
 
----
+```
 
 ## 🔄 Project Flow
 
