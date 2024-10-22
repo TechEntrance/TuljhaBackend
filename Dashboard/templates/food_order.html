@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Order Management</title>
+    
+    <!-- Static CSS and Google Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/food-order.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <aside>
+        <div class="top">
+          <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" />
+            <h2>Hotel<span class="danger">Manager</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-icons-sharp"> close </span>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <a href="{% url 'index' %}">
+            <span class="material-icons-sharp"> dashboard </span>
+            <h3>Dashboard</h3>
+          </a>
+          <a href="{% url 'organization' %}">
+            <span class="material-icons-sharp"> group </span>
+            <h3>Organizations</h3>
+          </a>
+          <a href="{% url 'food-order' %}" class="active">
+            <span class="material-icons-sharp"> restaurant </span>
+            <h3>Food Orders</h3>
+          </a>
+          <a href="{% url 'invoicing' %}">
+            <span class="material-icons-sharp"> receipt_long </span>
+            <h3>Invoices</h3>
+          </a>
+          <a href="{% url 'expense' %}">
+            <span class="material-icons-sharp"> money_off </span>
+            <h3>Expenses</h3>
+          </a>
+          <a href="{% url 'reports' %}">
+            <span class="material-icons-sharp"> assessment </span>
+            <h3>Reports</h3>
+          </a>
+          <a href="{% url 'profile' %}">
+            <span class="material-icons-sharp"> settings </span>
+            <h3>Settings</h3>
+          </a>
+        </div>
+      </aside>
+
+      <main>
+        <form id="food-order-form" class="form-container" method="POST">
+          {% csrf_token %}
+          <h1>Food Order Management</h1>
+          <label for="organization">Select Organization:</label>
+          <select id="organization" name="organization" required>
+            <!-- Dynamically populate organization options -->
+            {% for org in organizations %}
+              <option value="{{ org.id }}">{{ org.name }}</option>
+            {% endfor %}
+          </select>
+
+          <label for="people-served">Number of People Served:</label>
+          <input type="number" id="people-served" name="people_served" required />
+
+          <label for="food-items">Food Items Ordered:</label>
+          <input type="text" id="food-items" name="food_items" required />
+
+          <label for="total-cost">Total Cost:</label>
+          <input type="number" id="total-cost" name="total_cost" required />
+
+          <button type="submit">Submit Order</button>
+        </form>
+      </main>
+
+      <div class="right">
+        <div class="top">
+          <button id="menu-btn">
+            <span class="material-icons-sharp"> menu </span>
+          </button>
+          <div class="theme-toggler">
+            <span class="material-icons-sharp active"> light_mode </span>
+            <span class="material-icons-sharp"> dark_mode </span>
+          </div>
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b>{{ user.username }}</b></p>
+              <small class="text-muted">Manager</small>
+            </div>
+            <div class="profile-photo">
+              <img src="{% static 'images/sallu-bhai.jpg' %}" alt="Profile Picture" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Static JS -->
+    <script src="{% static 'js/index.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+{% load static %} <!-- Load Django's static file tag -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <title>Reports & Analytics</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
+    <!-- Use the static tag for the CSS file -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <aside>
+        <div class="top">
+          <div class="logo">
+            <!-- Use the static tag for the logo image -->
+            <img src="{% static 'images/logo.png' %}" alt="Logo" />
+            <h2>Hotel<span class="danger">Manager</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-icons-sharp"> close </span>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <a href="{% url 'index' %}">
+            <span class="material-icons-sharp">dashboard</span>
+            <h3>Dashboard</h3>
+        </a>
+        <a href="{% url 'organization' %}">
+            <span class="material-icons-sharp">group</span>
+            <h3>Organizations</h3>
+        </a>
+        <a href="{% url 'food-order' %}">
+            <span class="material-icons-sharp">restaurant</span>
+            <h3>Food Orders</h3>
+        </a>
+        <a href="{% url 'invoicing' %}" >
+            <span class="material-icons-sharp">receipt_long</span>
+            <h3>Invoices</h3>
+        </a>
+        <a href="{% url 'expense' %}" >
+            <span class="material-icons-sharp">money_off</span>
+            <h3>Expenses</h3>
+        </a>
+        <a href="{% url 'reports' %}" class="active">
+            <span class="material-icons-sharp">assessment</span>
+            <h3>Reports</h3>
+        </a>
+        <a href="{% url 'profile' %}">
+            <span class="material-icons-sharp">settings</span>
+            <h3>Settings</h3>
+        </a>
+        </div>
+      </aside>
+
+      <main>
+        <h1>Reports & Analytics</h1>
+        <div id="report-content">
+          <!-- Reports will be displayed here -->
+          {% block content %}
+          <!-- You can define content dynamically here -->
+          {% endblock %}
+        </div>
+      </main>
+
+      <div class="right">
+        <div class="top">
+          <button id="menu-btn">
+            <span class="material-icons-sharp"> menu </span>
+          </button>
+          <div class="theme-toggler">
+            <span class="material-icons-sharp active"> light_mode </span>
+            <span class="material-icons-sharp"> dark_mode </span>
+          </div>
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b>{{ user.username }}</b></p> <!-- Render logged-in username dynamically -->
+              <small class="text-muted">Manager</small>
+            </div>
+            <div class="profile-photo">
+              <!-- Use static tag for profile picture -->
+              <img src="{% static 'images/sallu-bhai.jpg' %}" alt="Profile Picture" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Use static tag for JavaScript -->
+    <script src="{% static 'js/index.js' %}"></script>
+  </body>
+</html>
