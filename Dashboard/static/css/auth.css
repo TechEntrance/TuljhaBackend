@@ -1,0 +1,105 @@
+/* ROOT VARIABLES */
+:root {
+    --color-primary: #7380ec;
+    --color-danger: #ff7782;
+    --color-success: #41f1b6;
+    --color-warning: #ffbb55;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-info-light: #dce1eb;
+    --color-dark: #363949;
+    --color-light: rgba(132, 139, 200, 0.18);
+    --color-primary-variant: #111e88;
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Auth Container */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2rem;
+}
+
+/* Auth Card */
+.auth-card {
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Heading */
+.auth-card h2 {
+    text-align: center;
+    color: var(--color-primary);
+}
+
+/* Input Fields */
+.auth-card input {
+    width: 100%;
+    padding: var(--padding-1);
+    margin: 0.5rem 0;
+    border: 1px solid var(--color-info-light);
+    border-radius: var(--border-radius-1);
+    font-size: 1rem;
+}
+
+/* Buttons */
+.auth-card button {
+    width: 100%;
+    padding: var(--padding-1);
+    background-color: var(--color-primary);
+    border: none;
+    border-radius: var(--border-radius-2);
+    color: var(--color-white);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.auth-card button:hover {
+    background-color: var(--color-primary-variant);
+}
+
+/* Error Message */
+.error-message {
+    color: var(--color-danger);
+    text-align: center;
+}
+
+/* Switch Mode Link */
+.switch-mode {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.switch-mode a {
+    color: var(--color-primary);
+    text-decoration: none;
+}

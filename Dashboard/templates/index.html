@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Expense Management Dashboard</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo">
+                    <h2>Hotel<span class="danger">Manager</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="{% url 'index' %}" class="active">
+                    <span class="material-icons-sharp">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{% url 'organization' %}">
+                    <span class="material-icons-sharp">group</span>
+                    <h3>Organizations</h3>
+                </a>
+                <a href="{% url 'food-order' %}">
+                    <span class="material-icons-sharp">restaurant</span>
+                    <h3>Food Orders</h3>
+                </a>
+                <a href="{% url 'invoicing' %}">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Invoices</h3>
+                </a>
+                <a href="{% url 'expense' %}">
+                    <span class="material-icons-sharp">money_off</span>
+                    <h3>Expenses</h3>
+                </a>
+                <a href="{% url 'reports' %}">
+                    <span class="material-icons-sharp">assessment</span>
+                    <h3>Reports</h3>
+                </a>
+                <a href="{% url 'profile' %}">
+                    <span class="material-icons-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+            </div>
+        </aside>
+        
+        <main>
+            <h1>Dashboard</h1>
+            <div class="insights">
+                <!-- Dashboard content goes here -->
+            </div>
+        </main>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-icons-sharp active">light_mode</span>
+                    <span class="material-icons-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>Admin</b></p>
+                        <small class="text-muted">Manager</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="{% static 'images/sallu-bhai.jpg' %}" alt="Profile Picture">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/index.js' %}"></script>
+</body>
+</html>
