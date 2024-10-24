@@ -136,6 +136,7 @@ def export_to_excel(request):
     # Add Organizations data
     org_headers = ['Name', 'Contact Person', 'Email']
     org_data = [(org.name, org.contact_person, org.email) for org in Organization.objects.all()]
+    print("Organizations Data:", org_data)  # Debugging line
     add_sheet_with_data('Organizations', org_headers, org_data)
 
     # Add Food Orders data
@@ -144,6 +145,7 @@ def export_to_excel(request):
         (order.id, order.organization.name, order.people_served, order.food_items, order.total_cost)
         for order in FoodOrder.objects.select_related('organization').all()
     ]
+    print("Food Orders Data:", food_order_data)  # Debugging line
     add_sheet_with_data('Food Orders', food_order_headers, food_order_data)
 
     # Add Invoices data
@@ -152,6 +154,7 @@ def export_to_excel(request):
         (invoice.id, invoice.total_amount, invoice.status, invoice.created_at.replace(tzinfo=None))  # Convert to naive datetime
         for invoice in Invoice.objects.all()
     ]
+    print("Invoices Data:", invoice_data)  # Debugging line
     add_sheet_with_data('Invoices', invoice_headers, invoice_data)
 
     # Add Expenses data
@@ -160,6 +163,7 @@ def export_to_excel(request):
         (expense.id, expense.category, expense.amount, expense.date.strftime('%Y-%m-%d'))  # Convert date to string
         for expense in Expense.objects.all()
     ]
+    print("Expenses Data:", expense_data)  # Debugging line
     add_sheet_with_data('Expenses', expense_headers, expense_data)
 
     # Create a BytesIO object to save the workbook in memory
