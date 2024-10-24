@@ -7,6 +7,7 @@
     <title>Hotel Expense Management Dashboard</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
@@ -56,11 +57,24 @@
             <h1>Dashboard</h1>
             <div>
                 <h2>Statistics</h2>
-                <p>Organizations: {{ organizations_count }}</p>
-                <p>Food Orders: {{ food_orders_count }}</p>
-                <p>Total Expenses: {{ expenses_total }}</p>
-                <p>Total Invoices: {{ invoices_total }}</p>
-                <!-- Add chart rendering logic here -->
+                <div class="chart-grid">
+                    <div class="chart-container">
+                        <canvas id="organizationsChart" width="150" height="55"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="foodOrdersChart" width="150" height="50"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="expensesChart" width="150" height="50"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="invoicesChart" width="150" height="50"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <canvas id="dashboardChart" width="400" height="200"></canvas>
             </div>
         </main>
 
@@ -87,5 +101,96 @@
     </div>
 
     <script src="{% static 'js/index.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('dashboardChart').getContext('2d');
+            const dashboardChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Organizations', 'Food Orders', 'Total Expenses', 'Total Invoices'],
+                    datasets: [{
+                        label: 'Statistics',
+                        data: [{{ organizations_count }}, {{ food_orders_count }}, {{ expenses_total }}, {{ invoices_total }}],
+                        backgroundColor: [
+                            'rgba(115, 128, 236, 0.6)',
+                            'rgba(255, 187, 85, 0.6)',
+                            'rgba(255, 119, 130, 0.6)',
+                            'rgba(65, 241, 182, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(115, 128, 236, 1)',
+                            'rgba(255, 187, 85, 1)',
+                            'rgba(255, 119, 130, 1)',
+                            'rgba(65, 241, 182, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            const organizationsCtx = document.getElementById('organizationsChart').getContext('2d');
+            const foodOrdersCtx = document.getElementById('foodOrdersChart').getContext('2d');
+            const expensesCtx = document.getElementById('expensesChart').getContext('2d');
+            const invoicesCtx = document.getElementById('invoicesChart').getContext('2d');
+
+            // Organizations Chart (Pie Chart)
+            new Chart(organizationsCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Organizations'],
+                    datasets: [{
+                        data: [{{ organizations_count }}],
+                        backgroundColor: ['rgba(115, 128, 236, 0.6)']
+                    }]
+                }
+            });
+
+            // Food Orders Chart (Line Chart)
+            new Chart(foodOrdersCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Food Orders'],
+                    datasets: [{
+                        label: 'Food Orders',
+                        data: [{{ food_orders_count }}],
+                        borderColor: 'rgba(255, 187, 85, 1)',
+                        fill: false
+                    }]
+                }
+            });
+
+            // Expenses Chart (Bar Chart)
+            new Chart(expensesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Total Expenses'],
+                    datasets: [{
+                        label: 'Expenses',
+                        data: [{{ expenses_total }}],
+                        backgroundColor: 'rgba(255, 119, 130, 0.6)'
+                    }]
+                }
+            });
+
+            // Invoices Chart (Doughnut Chart)
+            new Chart(invoicesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Invoices'],
+                    datasets: [{
+                        data: [{{ invoices_total }}],
+                        backgroundColor: ['rgba(65, 241, 182, 0.6)']
+                    }]
+                }
+            });
+        });
+    </script>
 </body>
 </html>

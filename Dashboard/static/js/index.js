@@ -176,11 +176,25 @@ const deleteOrganization = (index) => {
 
 // Function to handle food order submission
 const handleFoodOrderSubmit = (event) => {
-  event.preventDefault()
-  const organization = document.getElementById('organization').value
-  const peopleServed = document.getElementById('people-served').value
-  const foodItems = document.getElementById('food-items').value
-  const totalCost = document.getElementById('total-cost').value
+  event.preventDefault(); // Prevent the default form submission
+  
+  const organizationInput = document.querySelector('select[name="organization"]');
+  const peopleServedInput = document.querySelector('input[name="people_served"]');
+  const foodItemsInput = document.querySelector('input[name="food_items"]');
+  const totalCostInput = document.querySelector('input[name="total_cost"]');
+
+  // Check if any of the inputs are null
+  if (!organizationInput || !peopleServedInput || !foodItemsInput || !totalCostInput) {
+    console.error("One or more form elements are missing.");
+    return;
+  }
+
+  console.log(organizationInput, peopleServedInput, foodItemsInput, totalCostInput);
+
+  const organization = organizationInput.value;
+  const peopleServed = peopleServedInput.value;
+  const foodItems = foodItemsInput.value;
+  const totalCost = totalCostInput.value;
 
   // Update organization total ordered
   const org = organizations.find(org => org.name === organization)
@@ -229,4 +243,6 @@ renderOrganizations();
 
 
 // calculator
+
+
 

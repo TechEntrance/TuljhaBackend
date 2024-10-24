@@ -58,8 +58,8 @@
       </aside>
 
       <main>
+        <h1>Food Orders</h1>
         <form id="food-order-form" method="POST">
-          <h1>Food Orders</h1>
           {% csrf_token %}
           <select name="organization" required>
             <option value="">Select Organization</option>
@@ -97,6 +97,6 @@
     </div>
 
     <!-- Static JS -->
-    <script src="{% static 'js/index.js' %}"></script>
+    {% comment %} <script src="{% static 'js/index.js' %}"></script> {% endcomment %}
   </body>
 </html>

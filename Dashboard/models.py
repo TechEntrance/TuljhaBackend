@@ -38,7 +38,7 @@ class Invoice(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Invoice {self.invoice_number} - {self.organization.name}"
+        return f"Invoice for {self.organization.name} - {self.total_amount}"
 
 class FoodOrder(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
@@ -46,3 +46,13 @@ class FoodOrder(models.Model):
     food_items = models.TextField()  # Store food items as a string
     total_cost = models.DecimalField(max_digits=10, decimal_places=2)
     order_date = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        # Create the food order
+        super().save(*args, **kwargs)
+        # Create an invoice for the food order
+        Invoice.objects.create(
+            organization=self.organization,
+            total_amount=self.total_cost,
+            status='Unpaid'  # Default status
+        )

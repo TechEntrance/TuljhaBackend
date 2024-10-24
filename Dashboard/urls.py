@@ -7,6 +7,8 @@ from .views import (
     expense_view,
     reports,
     profile,
+    edit_invoice,
+    delete_invoice,
 )
 urlpatterns = [
     path('', index, name='index'),  # Home page
@@ -16,4 +18,6 @@ urlpatterns = [
     path('expense/', expense_view, name='expense'),  # Expense page
     path('reports/', reports, name='reports'),  # Reports page
     path('profile/', profile, name='profile'),  # Profile settings page
+    path('edit-invoice/<int:invoice_id>/', edit_invoice, name='edit_invoice'),
+    path('delete-invoice/<int:invoice_id>/', delete_invoice, name='delete_invoice'),
 ]

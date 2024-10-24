@@ -648,3 +648,24 @@ button {
 button:hover {
   background-color: var(--color-primary-variant);
 }
+
+/* Add this to your CSS file (style.css or a new CSS file) */
+canvas {
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px; /* Space between charts */
+        }
+        .chart-container {
+            width: 100%; /* Full width of the grid cell */
+            height: auto; /* Auto height to maintain aspect ratio */
+        }
+
+
+
