@@ -76,23 +76,27 @@ img {
   width: 100%;
 }
 h1 {
-  font-weight: 800;
-  font-size: 1.8rem;
+  font-size: 2rem; /* Main heading */
+  font-weight: 800; /* Bold */
 }
 h2 {
-  font-size: 1.4rem;
+  font-size: 1.5rem; /* Subheading */
+  font-weight: 600; /* Semi-bold */
 }
 h3 {
-  font-size: 0.87rem;
+  font-size: 1.25rem; /* Section heading */
+  font-weight: 500; /* Medium */
 }
 h4 {
-  font-size: 0.8rem;
+  font-size: 1rem; /* Smaller heading */
+  font-weight: 500; /* Medium */
 }
 h5 {
   font-family: 0.77rem;
 }
 small {
-  font-size: 0.75rem;
+  font-size: 0.875rem; /* Paragraph and small text */
+  color: var(--color-dark-variant); /* Consistent color for text */
 }
 .profile-photo {
   width: 2.8rem;
@@ -208,6 +212,10 @@ aside .sidebar .message-count {
 /* START MAIN */
 main {
   margin-top: 1.4rem;
+  padding: 1rem; /* Added padding for better spacing */
+  background: var(--color-background); /* Optional: Add a background color */
+  border-radius: var(--border-radius-2); /* Optional: Rounded corners */
+  box-shadow: 0 2rem 3rem var(--color-light); /* Optional: Shadow for depth */
 }
 
 /* START DATE INPUT */
@@ -650,22 +658,99 @@ button:hover {
 }
 
 /* Add this to your CSS file (style.css or a new CSS file) */
-canvas {
-    margin: 20px 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Updated styles for the chart grid and containers */
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns for larger screens */
+  gap: 20px; /* Increased space between charts */
 }
 
+.chart-container {
+  width: 100%; /* Full width of the grid cell */
+  height: auto; /* Auto height to maintain aspect ratio */
+  max-width: 250px; /* Set a max width for the chart containers */
+  margin: 0 auto; /* Center the chart containers */
+  background: var(--color-white); /* Background color for chart containers */
+  border-radius: var(--border-radius-1); /* Rounded corners */
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  padding: 1rem; /* Padding inside the chart containers */
+}
 
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px; /* Space between charts */
-        }
-        .chart-container {
-            width: 100%; /* Full width of the grid cell */
-            height: auto; /* Auto height to maintain aspect ratio */
-        }
+canvas {
+  width: 100% !important; /* Make canvas responsive */
+  height: 150px !important; /* Set a consistent height for all charts */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
 
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+  .chart-grid {
+      grid-template-columns: 1fr; /* Stack charts in a single column on small screens */
+  }
+}
 
+.loading-indicator {
+  display: none; /* Initially hidden */
+  position: absolute; /* Position it in the center */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center it */
+  font-size: 1.5rem; /* Font size */
+  color: var(--color-dark); /* Text color */
+  z-index: 10; /* Ensure it appears above other elements */
+}
 
+.filter-controls {
+    margin-bottom: 1rem; /* Space below the filter controls */
+}
+
+.filter-btn {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    margin-right: 0.5rem; /* Space between buttons */
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary-variant); /* Highlight active button */
+}
+
+.filter-btn:hover {
+    background-color: var(--color-primary-variant); /* Change on hover */
+}
+
+/* Font Sizes */
+h1 {
+    font-size: 2rem; /* Main heading */
+    font-weight: 800; /* Bold */
+}
+
+h2 {
+    font-size: 1.5rem; /* Subheading */
+    font-weight: 600; /* Semi-bold */
+}
+
+h3 {
+    font-size: 1.25rem; /* Section heading */
+    font-weight: 500; /* Medium */
+}
+
+h4 {
+    font-size: 1rem; /* Smaller heading */
+    font-weight: 500; /* Medium */
+}
+
+p, small {
+    font-size: 0.875rem; /* Paragraph and small text */
+    color: var(--color-dark-variant); /* Consistent color for text */
+}
+
+.label {
+    font-size: 1rem; /* Label font size */
+    font-weight: 500; /* Medium */
+    color: var(--color-dark); /* Consistent color for labels */
+}

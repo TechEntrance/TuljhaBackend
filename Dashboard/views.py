@@ -3,6 +3,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Organization, FoodOrder, Invoice, Expense
 from django.contrib import messages
 from django.db.models import Sum
+from django.http import HttpResponse
+from openpyxl import Workbook
+from io import BytesIO
+from openpyxl.styles import Font, PatternFill
+from datetime import datetime
 
 def index(request):
     # Fetch data for charts
@@ -104,3 +109,68 @@ def reports(request):
 # View for profile settings page
 def profile(request):
     return render(request, 'profile.html')
+
+def export_to_excel(request):
+    # Create a workbook and add a worksheet
+    workbook = Workbook()
+    
+    # Function to add a sheet with data
+    def add_sheet_with_data(sheet_name, headers, data):
+        worksheet = workbook.create_sheet(title=sheet_name)
+        
+        # Define header style
+        header_font = Font(bold=True, color="FFFFFF")  # White text
+        header_fill = PatternFill(start_color="4F81BD", end_color="4F81BD", fill_type="solid")  # Blue background
+        
+        # Write headers
+        for col_num, header in enumerate(headers, 1):
+            cell = worksheet.cell(row=1, column=col_num, value=header)
+            cell.font = header_font
+            cell.fill = header_fill
+        
+        # Write data
+        for row_num, row_data in enumerate(data, 2):  # Start from the second row
+            for col_num, value in enumerate(row_data, 1):
+                worksheet.cell(row=row_num, column=col_num, value=value)
+
+    # Add Organizations data
+    org_headers = ['Name', 'Contact Person', 'Email']
+    org_data = [(org.name, org.contact_person, org.email) for org in Organization.objects.all()]
+    add_sheet_with_data('Organizations', org_headers, org_data)
+
+    # Add Food Orders data
+    food_order_headers = ['ID', 'Organization', 'People Served', 'Food Items', 'Total Cost']
+    food_order_data = [
+        (order.id, order.organization.name, order.people_served, order.food_items, order.total_cost)
+        for order in FoodOrder.objects.select_related('organization').all()
+    ]
+    add_sheet_with_data('Food Orders', food_order_headers, food_order_data)
+
+    # Add Invoices data
+    invoice_headers = ['Invoice ID', 'Total Amount', 'Status', 'Date']
+    invoice_data = [
+        (invoice.id, invoice.total_amount, invoice.status, invoice.created_at.replace(tzinfo=None))  # Convert to naive datetime
+        for invoice in Invoice.objects.all()
+    ]
+    add_sheet_with_data('Invoices', invoice_headers, invoice_data)
+
+    # Add Expenses data
+    expense_headers = ['Expense ID', 'Category', 'Amount', 'Date']
+    expense_data = [
+        (expense.id, expense.category, expense.amount, expense.date.strftime('%Y-%m-%d'))  # Convert date to string
+        for expense in Expense.objects.all()
+    ]
+    add_sheet_with_data('Expenses', expense_headers, expense_data)
+
+    # Create a BytesIO object to save the workbook in memory
+    output = BytesIO()
+    workbook.save(output)
+    output.seek(0)  # Move to the beginning of the BytesIO object
+
+    # Create an HTTP response with the Excel file
+    response = HttpResponse(
+        output,
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename="reports.xlsx"'
+    return response

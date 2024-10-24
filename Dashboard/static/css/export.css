@@ -1,0 +1,13 @@
+.export-btn {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-1);
+    cursor: pointer;
+    margin-top: 1rem; /* Space above the button */
+}
+
+.export-btn:hover {
+    background-color: var(--color-primary-variant); /* Change on hover */
+}

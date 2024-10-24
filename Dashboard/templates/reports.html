@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <!-- Use the static tag for the CSS file -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/export.css' %}" />
   </head>
   <body>
     <div class="container">
@@ -60,12 +61,13 @@
       <main>
         <h1>Reports & Analytics</h1>
         <div id="report-content">
-          <!-- Reports will be displayed here -->
-          {% block content %}
-          <!-- You can define content dynamically here -->
-          {% endblock %}
+            <!-- Reports will be displayed here -->
+            {% block content %}
+            <!-- You can define content dynamically here -->
+            {% endblock %}
         </div>
-      </main>
+        <button id="export-btn" class="export-btn" onclick="window.location.href='{% url 'export_to_excel' %}'">Export to Excel</button>
+    </main>
 
       <div class="right">
         <div class="top">

@@ -34,8 +34,8 @@ User = get_user_model()
 class Invoice(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=20, choices=[('Paid', 'Paid'), ('Unpaid', 'Unpaid')])
-    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)  # Example field
 
     def __str__(self):
         return f"Invoice for {self.organization.name} - {self.total_amount}"
