@@ -56,31 +56,32 @@
         </aside>
 
         <main>
-            <form id="organization-form">
-                <h1>Organization Management</h1>
-                <label for="org-name">Organization Name:</label>
-                <input type="text" id="org-name" required />
-                <label for="contact-person">Contact Person:</label>
-                <input type="text" id="contact-person" required />
-                <label for="email">Email:</label>
-                <input type="email" id="email" required />
+            <h1>Organizations</h1>
+            <form id="organization-form" method="POST">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Organization Name" required>
+                <input type="text" name="contact_person" placeholder="Contact Person" required>
+                <input type="email" name="email" placeholder="Email" required>
                 <button type="submit">Add Organization</button>
             </form>
             <table>
                 <thead>
                     <tr>
-                        <th>Organization Name</th>
+                        <th>Name</th>
                         <th>Contact Person</th>
                         <th>Email</th>
-                        <th>Total Ordered</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="organization-table-body">
-                    <!-- Organizations will be populated here -->
+                <tbody>
+                    {% for organization in organizations %}
+                    <tr>
+                        <td>{{ organization.name }}</td>
+                        <td>{{ organization.contact_person }}</td>
+                        <td>{{ organization.email }}</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
-            <button id="download-btn">Download as CSV</button>
         </main>
 
         <div class="right">
@@ -106,6 +107,6 @@
     </div>
 
     <script src="{% static 'js/index.js' %}"></script>
-    <script src="{% static 'js/organization.js' %}"></script>
+
 </body>
 </html>

@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 # Organization model
 class Organization(models.Model):
     name = models.CharField(max_length=255)  # Organization name
+    contact_person = models.CharField(max_length=255, null=True)  # Make this field nullable
+    email = models.EmailField(null=True)  # Make this field nullable
     address = models.TextField()  # Organization address
     contact_email = models.EmailField()  # Contact email
 
@@ -14,7 +16,7 @@ class Organization(models.Model):
 
 # Expense model
 class Expense(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # The user who made the expense
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Ensure this line exists
     organization = models.ForeignKey(Organization, null=True, blank=True, on_delete=models.SET_NULL)  # Optional, organization linked to the expense
     category = models.CharField(max_length=100)  # Category of the expense
     amount = models.DecimalField(max_digits=10, decimal_places=2)  # Amount of the expense
@@ -30,10 +32,17 @@ class Expense(models.Model):
 User = get_user_model()
 
 class Invoice(models.Model):
-    organization = models.CharField(max_length=255)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=50, choices=[('paid', 'Paid'), ('unpaid', 'Unpaid')])
+    status = models.CharField(max_length=20, choices=[('Paid', 'Paid'), ('Unpaid', 'Unpaid')])
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Invoice {self.invoice_number} - {self.organization.name}"
+
+class FoodOrder(models.Model):
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    people_served = models.IntegerField()
+    food_items = models.TextField()  # Store food items as a string
+    total_cost = models.DecimalField(max_digits=10, decimal_places=2)
+    order_date = models.DateTimeField(auto_now_add=True)

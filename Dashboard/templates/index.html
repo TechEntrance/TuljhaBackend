@@ -54,8 +54,13 @@
         
         <main>
             <h1>Dashboard</h1>
-            <div class="insights">
-                <!-- Dashboard content goes here -->
+            <div>
+                <h2>Statistics</h2>
+                <p>Organizations: {{ organizations_count }}</p>
+                <p>Food Orders: {{ food_orders_count }}</p>
+                <p>Total Expenses: {{ expenses_total }}</p>
+                <p>Total Invoices: {{ invoices_total }}</p>
+                <!-- Add chart rendering logic here -->
             </div>
         </main>
 

@@ -58,27 +58,19 @@
       </aside>
 
       <main>
-        <form id="food-order-form" class="form-container" method="POST">
+        <form id="food-order-form" method="POST">
+          <h1>Food Orders</h1>
           {% csrf_token %}
-          <h1>Food Order Management</h1>
-          <label for="organization">Select Organization:</label>
-          <select id="organization" name="organization" required>
-            <!-- Dynamically populate organization options -->
+          <select name="organization" required>
+            <option value="">Select Organization</option>
             {% for org in organizations %}
-              <option value="{{ org.id }}">{{ org.name }}</option>
+            <option value="{{ org.id }}">{{ org.name }}</option>
             {% endfor %}
           </select>
-
-          <label for="people-served">Number of People Served:</label>
-          <input type="number" id="people-served" name="people_served" required />
-
-          <label for="food-items">Food Items Ordered:</label>
-          <input type="text" id="food-items" name="food_items" required />
-
-          <label for="total-cost">Total Cost:</label>
-          <input type="number" id="total-cost" name="total_cost" required />
-
-          <button type="submit">Submit Order</button>
+          <input type="number" name="people_served" placeholder="People Served" required>
+          <input type="text" name="food_items" placeholder="Food Items" required>
+          <input type="number" name="total_cost" placeholder="Total Cost" required>
+          <button type="submit">Add Order</button>
         </form>
       </main>
 

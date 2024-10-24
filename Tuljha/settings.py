@@ -107,11 +107,9 @@ USE_TZ = True
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Static files settings
-STATIC_URL = '/static/'  # URL to use when referring to static files in templates
-
-# Additional directories to include in the static search path
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'Dashboard/static'),
+    BASE_DIR / "Dashboard/static",  # Adjust this path if necessary
 ]
 
 # Directory where static files will be collected for production
@@ -122,4 +120,4 @@ MEDIA_URL = '/media/'  # URL to use when referring to media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory to store media files
 
 # settings.py
-LOGIN_URL = '/Dashboard/login/'  # Update with your actual login URL
+# LOGIN_URL = '/Dashboard/login/'  # Update with your actual login URL
